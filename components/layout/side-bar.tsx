@@ -54,7 +54,7 @@ function NavList({ onNavigate }: { onNavigate?: () => void }) {
       {routes.map(({ href, label, icon: Icon }) => {
         const active = pathname === href || (href !== '/' && pathname?.startsWith(href))
         return (
-          <Link key={href} href={href} onClick={onNavigate}>
+          <Link prefetch={false} key={href} href={href} onClick={onNavigate}>
             <div
               className={cn(
                 'flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors',
