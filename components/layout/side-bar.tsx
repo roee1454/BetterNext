@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { startTransition, useState } from 'react'
 import {
   Avatar,
   AvatarFallback,
@@ -17,6 +17,9 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
@@ -32,6 +35,8 @@ import {
   Menu,
 } from 'lucide-react'
 import { auth } from '@/lib/auth-client'
+import { useTheme } from 'next-themes'
+import { useOptimisticNavigation } from '@/context/navigation-context'
 
 
 // ---------- Client component ----------
@@ -48,13 +53,13 @@ const routes = [
 ]
 
 function NavList({ onNavigate }: { onNavigate?: () => void }) {
-  const pathname = usePathname()
+  const { optimisticPathname, setOptimisticPathname } = useOptimisticNavigation();
   return (
     <nav className="grid gap-1">
       {routes.map(({ href, label, icon: Icon }) => {
-        const active = pathname === href || (href !== '/' && pathname?.startsWith(href))
+        const active = optimisticPathname == href;
         return (
-          <Link prefetch={false} key={href} href={href} onClick={onNavigate}>
+          <Link onNavigate={() => startTransition(() => setOptimisticPathname(href))} key={href} href={href} onClick={onNavigate}>
             <div
               className={cn(
                 'flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors',
@@ -86,6 +91,7 @@ function UserBadge({
 }) {
   const displayName = name || username || email || 'User';
   const router = useRouter();
+  const theme = useTheme()
 
   const signOut = async () => {
     try {
@@ -123,9 +129,15 @@ function UserBadge({
         <DropdownMenuItem asChild>
           <Link href="/settings">Settings</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/profile">Profile</Link>
-        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>Themes</DropdownMenuSubTrigger>
+          <DropdownMenuSubContent>
+            <DropdownMenuItem onClick={() => theme.setTheme("light")}>Light</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => theme.setTheme("dark")}>Dark</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => theme.setTheme(theme.systemTheme || "system")}>System</DropdownMenuItem>
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
             <button onClick={signOut} className="w-full text-left">Sign out</button>

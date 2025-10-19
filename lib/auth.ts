@@ -3,7 +3,6 @@ import { prismaAdapter } from 'better-auth/adapters/prisma'
 import { prisma } from '@/lib/prisma'
 import { headers } from "next/headers";
 import { sendEmail } from "./email";
-import { cache } from "react";
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
@@ -63,8 +62,8 @@ export const auth = betterAuth({
   }
 });
 
-export const getSession = cache(async () => {
+export const getSession = async () => {
   return await auth.api.getSession({
     headers: await headers()
   })
-})
+}

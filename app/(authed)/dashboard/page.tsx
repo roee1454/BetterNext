@@ -1,15 +1,21 @@
+'use client'
+
 import { VerificationAlert } from '@/components/email/verification-alert';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { getSession } from '@/lib/auth';
-import { redirect } from 'next/navigation';
+import { auth } from '@/lib/auth-client';
 
-export default async function DashboardPage() {
-  const session = await getSession()
-  const user = session?.user;
-
-  if (!user) {
-    return redirect("/auth")
+export default function DashboardPage() {
+  const { data: session } = auth.useSession()
+  
+  if (!session) {
+    return (
+      <div className="w-full flex items-center justify-center min-h-[400px]">
+        <p className="text-muted-foreground">Loading...</p>
+      </div>
+    );
   }
+
+  const user = session.user;
 
   return (
     <div className="bg-background p-8">

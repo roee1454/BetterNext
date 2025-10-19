@@ -325,7 +325,7 @@ const AuthPage: React.FC = () => {
               )}
 
               {/* Forgot password link (Sign In only) */}
-              {!isSignUp && (
+              {/* {!isSignUp && (
                 <div className="flex justify-end">
                   <Button
                     type="button"
@@ -336,7 +336,7 @@ const AuthPage: React.FC = () => {
                     Forgot password?
                   </Button>
                 </div>
-              )}
+              )} */}
 
               { form.formState.errors?.root && <p className='text-sm text-red-500'>{form.formState.errors?.root.message}</p> }
 
