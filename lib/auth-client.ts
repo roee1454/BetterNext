@@ -2,12 +2,12 @@
 
 import { createAuthClient } from 'better-auth/react'
 
-const BASE_URL = process.env.BASE_URL;
+const NEXT_BASE_URL = process.env.NEXT_BASE_URL;
 
-if (!BASE_URL) {
-    throw new Error("Missing `BASE_URL` In your app, please fix!")
+if (!NEXT_BASE_URL) {
+    throw new Error("Missing `NEXT_BASE_URL` In your app, please fix!")
 }
 
 export const auth =  createAuthClient({
-    baseURL: BASE_URL,
+    baseURL: NEXT_BASE_URL,
 })
