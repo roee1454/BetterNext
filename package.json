@@ -8,8 +8,10 @@
     "start": "next start",
     "lint": "eslint",
     "postinstall": "npx prisma generate",
+    "vercel-env": "vercel env import .env --environmet=production",
     "vercel-build": "npx prisma generate && npx prisma migrate deploy && next build --turbopack"
   },
+
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-avatar": "^1.1.10",
@@ -38,6 +40,7 @@
     "tailwind-merge": "^3.3.1",
     "zod": "^4.1.12"
   },
+
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@prisma/client": "6.17.1",
