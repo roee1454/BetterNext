@@ -1,4 +1,4 @@
-![alt text](./public//logo.png)
+![alt text](./thumbnail/BetterNext.png)
 
 # BetterNext
 
